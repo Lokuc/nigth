@@ -15,6 +15,7 @@ public class Menu extends ScreenAdapter implements ClickListener {
     private Button start;
     private OrthographicCamera camera;
     private MyGdxGame game;
+    static Frame frame;
 
 
     Menu(MyGdxGame game){
@@ -51,7 +52,8 @@ public class Menu extends ScreenAdapter implements ClickListener {
     @Override
     public void click(String id) {
         if(start.id(id)){
-            game.setScreen(new Frame());
+            frame = new Frame();
+            game.setScreen(frame);
             dispose();
         }
     }

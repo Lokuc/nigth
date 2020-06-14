@@ -12,7 +12,6 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.severgames.lib.Button;
-
 import java.util.Random;
 
 import static com.severgames.lib.ClickListener.*;
@@ -27,7 +26,7 @@ public class Frame extends ScreenAdapter{
     private float vusota;
     private boolean press = false;
     private int x=0,y=0;
-    private Enemy[] enemy;
+    Enemy[] enemy;
     private Button shotB;
     private Star[] stars;
     private Subject[] subject;
@@ -54,7 +53,7 @@ public class Frame extends ScreenAdapter{
         camera = new OrthographicCamera();
         camera.setToOrtho(false,MyGdxGame.W,MyGdxGame.H);
         for(int i=0;i<enemy.length;i++){
-            enemy[i]=new Enemy();
+            enemy[i]=new Enemy(i);
             enemy[i].spawn();
         }
         subject=  new Subject[enemy.length*2+2];

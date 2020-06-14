@@ -16,12 +16,15 @@ public class Enemy extends Subject{
     private float reloadTime;
     private boolean active = false;
     private final int speed = 5;
+    private int num=0;
+    private boolean temp=false;
 
 
-    Enemy(){
+    Enemy(int num){
         sprite = new Sprite(new Texture("enemy.png"));
         sprite.setSize(MyGdxGame.H/5,MyGdxGame.H/5);
         bullet = new Bullet();
+        this.num=num;
         sprite.setX(X);
         sprite.setY(MyGdxGame.H-sprite.getHeight());
     }
@@ -67,7 +70,7 @@ public class Enemy extends Subject{
         return X;
     }
 
-    public void setX(int xa) {
+    void setX(int xa) {
         if(Math.abs(X-xa)<=sprite.getWidth()/2+30){
             shot();
         }
@@ -76,7 +79,18 @@ public class Enemy extends Subject{
         }else{
             X+=X-xa>=0?-speed:speed;
         }
-        sprite.setX(X);
+        temp=false;
+        for(int i=0;i<Menu.frame.enemy.length;i++){
+            if(i==num){
+                continue;
+            }
+            if(Menu.frame.enemy[i].getRectandle().contains(sprite.getBoundingRectangle())){
+                temp=true;
+            }
+        }
+        if(!temp) {
+            sprite.setX(X);
+        }
     }
 
 
