@@ -32,6 +32,7 @@ public class Frame extends ScreenAdapter{
     private Subject[] subject;
     private boolean []dest;
     private Sprite gameOver;
+    private float timeSpawnEnemy=0;
 
 
 
@@ -54,8 +55,8 @@ public class Frame extends ScreenAdapter{
         camera.setToOrtho(false,MyGdxGame.W,MyGdxGame.H);
         for(int i=0;i<enemy.length;i++){
             enemy[i]=new Enemy(i);
-            enemy[i].spawn();
         }
+        enemy[0].spawn();
         subject=  new Subject[enemy.length*2+2];
         subject[0]=plane.getBullet();
         subject[1]=plane;
@@ -71,6 +72,15 @@ public class Frame extends ScreenAdapter{
 
     @Override
     public void render(float delta) {
+        timeSpawnEnemy+=delta;
+        if(timeSpawnEnemy>=5.0f){
+            for (Enemy value : enemy) {
+                if (!value.getActive()) {
+                    value.spawn();
+                    timeSpawnEnemy = 0;
+                }
+            }
+        }
         camera.update();
         batch.setProjectionMatrix(camera.combined);
         Gdx.gl.glClearColor(0, 0, 1f - vusota / 500f, 1);

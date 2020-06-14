@@ -48,6 +48,9 @@ public class Enemy extends Subject{
         sprite.setPosition(-sprite.getWidth(),-sprite.getHeight());
     }
 
+    boolean getActive(){
+        return active;
+    }
 
 
 
@@ -71,6 +74,10 @@ public class Enemy extends Subject{
         return X;
     }
 
+    void setXP(int x){
+        sprite.setX(x);
+    }
+
     void setX(int xa) {
         if(Math.abs(X-xa)<=sprite.getWidth()/2+30){
             shot();
@@ -82,20 +89,20 @@ public class Enemy extends Subject{
         }
         temp=false;
         for(int i=0;i<Menu.frame.enemy.length;i++){
-            if(i==num){
-                continue;
-            }
-            if(Menu.frame.enemy[i].getRectandle().contains(sprite.getBoundingRectangle())){
-                temp=true;
-                tempi=i;
-                break;
+            if (i == num) {
+                if(Menu.frame.enemy[i].getX()>=sprite.getX()&&Menu.frame.enemy[i].getX()<=sprite.getX()+sprite.getWidth()){
+                    temp=true;
+                    System.out.println("bom");
+                    tempi=i;
+                    break;
+                }
             }
         }
         if(!temp) {
             tempi= (int) sprite.getX();
             sprite.setX(X);
         }else{
-            sprite.setX(Menu.frame.enemy[tempi].getX()+sprite.getWidth());
+            Menu.frame.enemy[tempi].setXP((int) (sprite.getX()+sprite.getWidth()+1));
         }
 
         temp=false;
@@ -103,7 +110,7 @@ public class Enemy extends Subject{
             if(i==num){
                 continue;
             }
-            if(Menu.frame.enemy[i].getRectandle().contains(sprite.getBoundingRectangle())){
+            if(Menu.frame.enemy[i].getX()>=sprite.getX()&&Menu.frame.enemy[i].getX()<=sprite.getX()+sprite.getWidth()){
                 temp=true;
             }
         }
