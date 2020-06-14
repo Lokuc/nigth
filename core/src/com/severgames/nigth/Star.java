@@ -13,7 +13,7 @@ public class Star {
     private int maxStep;
     private static Random random;
     private int temp;
-    private final int SPEED=700;
+    private final int SPEED=500;
     private float sleepTime=0f;
     private float time=0f;
 

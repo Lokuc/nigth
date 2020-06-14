@@ -3,10 +3,11 @@ package com.severgames.nigth;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Rectangle;
 
-public class Bullet {
+public class Bullet extends Subject{
 
-    private Sprite sprite;
+    protected Sprite sprite;
     private boolean toUp = false;
     private boolean active = false;
 
@@ -30,6 +31,14 @@ public class Bullet {
             deactivate();
         }
 
+    }
+
+    public Rectangle getRectandle(){
+        return sprite.getBoundingRectangle();
+    }
+
+    public void destroy(){
+        deactivate();
     }
 
     private void deactivate(){

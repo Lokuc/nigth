@@ -5,9 +5,9 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 
-public class MyPlane {
+public class MyPlane extends Subject{
 
-    private Sprite sprite;
+    protected Sprite sprite;
 
     int x,y;
 
@@ -15,12 +15,14 @@ public class MyPlane {
     private Bullet bullet;
     private float reloadTime;
     private final int speed=20;
+    private boolean isALive;
 
 
     MyPlane(){
         sprite = new Sprite(new Texture("plane.png"));
         sprite.setSize(MyGdxGame.H/5,MyGdxGame.H/5);
         bullet = new Bullet();
+        isALive=true;
         sprite.setX(X);
         sprite.setY(Y);
     }
@@ -30,12 +32,31 @@ public class MyPlane {
     }
 
 
+    public void destroy(){
+        isALive=false;
+    }
+
+    public Rectangle getRectandle(){
+        return sprite.getBoundingRectangle();
+    }
+
+    boolean getLife(){
+        return isALive;
+    }
+
+
 
 
     void draw(SpriteBatch batch,float delta){
-        reloadTime+=delta;
-        sprite.draw(batch);
-        bullet.draw(batch,delta);
+        if(isALive) {
+            reloadTime += delta;
+            sprite.draw(batch);
+            bullet.draw(batch, delta);
+        }
+    }
+
+    Bullet getBullet(){
+        return bullet;
     }
 
 

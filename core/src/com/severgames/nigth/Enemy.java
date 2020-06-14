@@ -3,10 +3,11 @@ package com.severgames.nigth;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Rectangle;
 
-public class Enemy {
+public class Enemy extends Subject{
 
-    private Sprite sprite;
+    protected Sprite sprite;
 
     int x,y;
 
@@ -25,13 +26,22 @@ public class Enemy {
         sprite.setY(MyGdxGame.H-sprite.getHeight());
     }
 
+    public Rectangle getRectandle(){
+        return sprite.getBoundingRectangle();
+    }
+
     void spawn(){
         active= true;
         sprite.setX(-sprite.getWidth()*2);
     }
 
-    void checkCol(){
-        bullet.checkCollision();
+    Bullet getBullet(){
+        return bullet;
+    }
+
+    public void destroy(){
+        active=false;
+        sprite.setPosition(-sprite.getWidth(),-sprite.getHeight());
     }
 
 
