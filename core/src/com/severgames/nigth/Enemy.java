@@ -18,6 +18,7 @@ public class Enemy extends Subject{
     private final int speed = 5;
     private int num=0;
     private boolean temp=false;
+    private int tempi;
 
 
     Enemy(int num){
@@ -86,10 +87,28 @@ public class Enemy extends Subject{
             }
             if(Menu.frame.enemy[i].getRectandle().contains(sprite.getBoundingRectangle())){
                 temp=true;
+                tempi=i;
+                break;
             }
         }
         if(!temp) {
+            tempi= (int) sprite.getX();
             sprite.setX(X);
+        }else{
+            sprite.setX(Menu.frame.enemy[tempi].getX()+sprite.getWidth());
+        }
+
+        temp=false;
+        for(int i=0;i<Menu.frame.enemy.length;i++){
+            if(i==num){
+                continue;
+            }
+            if(Menu.frame.enemy[i].getRectandle().contains(sprite.getBoundingRectangle())){
+                temp=true;
+            }
+        }
+        if(temp) {
+            sprite.setX(tempi);
         }
     }
 

@@ -8,7 +8,7 @@ public class MyGdxGame extends Game {
 
 	static int H;
 	static int W;
-	static final int SPEEDBULLET =  1500
+	static final int SPEEDBULLET =  1500;
 
 	@Override
 	public void create () {
