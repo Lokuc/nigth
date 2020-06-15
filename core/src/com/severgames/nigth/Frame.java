@@ -73,11 +73,13 @@ public class Frame extends ScreenAdapter{
     @Override
     public void render(float delta) {
         timeSpawnEnemy+=delta;
-        if(timeSpawnEnemy>=5.0f){
+        if(timeSpawnEnemy>=3.0f){
             for (Enemy value : enemy) {
                 if (!value.getActive()) {
                     value.spawn();
+                    System.out.println("spawn");
                     timeSpawnEnemy = 0;
+                    break;
                 }
             }
         }
@@ -85,7 +87,7 @@ public class Frame extends ScreenAdapter{
         batch.setProjectionMatrix(camera.combined);
         Gdx.gl.glClearColor(0, 0, 1f - vusota / 500f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        if(plane.getLife()) {
+        if(plane.getActive()) {
             vusota += delta;
             checkCol();
             if (Gdx.app.getType() == Application.ApplicationType.Desktop) {
@@ -155,7 +157,7 @@ public class Frame extends ScreenAdapter{
         for(int i=0;i<subject.length;i++){
             for(int j=0;j<subject.length;j++){
                 if (i != j) {
-                    if(subject[i].getRectandle().contains(subject[j].getRectandle())){
+                    if(subject[i].getRectandle().contains(subject[j].getRectandle())&&subject[i].getActive()){
                         dest[i]=true;
                         dest[j]=true;
                     }

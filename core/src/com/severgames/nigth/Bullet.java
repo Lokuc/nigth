@@ -5,7 +5,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 
-public class Bullet extends Subject{
+public class Bullet implements Subject{
 
     protected Sprite sprite;
     private boolean toUp = false;
@@ -25,20 +25,29 @@ public class Bullet extends Subject{
 
 
     void checkCollision(){
-        if(sprite.getY()-sprite.getHeight()<=0){
-            deactivate();
-        }else if(sprite.getY()>MyGdxGame.H){
-            deactivate();
+        if(active) {
+            if (sprite.getY() - sprite.getHeight() <= 0) {
+                deactivate();
+            } else if (sprite.getY() > MyGdxGame.H) {
+                deactivate();
+            }
         }
 
     }
 
-    public Rectangle getRectandle(){
-        return sprite.getBoundingRectangle();
-    }
-
+    @Override
     public void destroy(){
         deactivate();
+    }
+
+    @Override
+    public boolean getActive() {
+        return active;
+    }
+
+    @Override
+    public Rectangle getRectandle(){
+        return sprite.getBoundingRectangle();
     }
 
     private void deactivate(){

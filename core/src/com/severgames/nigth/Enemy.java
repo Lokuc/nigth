@@ -5,7 +5,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 
-public class Enemy extends Subject{
+public class Enemy implements Subject{
 
     protected Sprite sprite;
 
@@ -14,7 +14,7 @@ public class Enemy extends Subject{
     private int X=0;
     private Bullet bullet;
     private float reloadTime;
-    private boolean active = false;
+    private boolean active;
     private final int speed = 5;
     private int num=0;
     private boolean temp=false;
@@ -22,16 +22,13 @@ public class Enemy extends Subject{
 
 
     Enemy(int num){
+        active = false;
         sprite = new Sprite(new Texture("enemy.png"));
         sprite.setSize(MyGdxGame.H/5,MyGdxGame.H/5);
         bullet = new Bullet();
         this.num=num;
         sprite.setX(X);
         sprite.setY(MyGdxGame.H-sprite.getHeight());
-    }
-
-    public Rectangle getRectandle(){
-        return sprite.getBoundingRectangle();
     }
 
     void spawn(){
@@ -43,19 +40,33 @@ public class Enemy extends Subject{
         return bullet;
     }
 
+
+
+    @Override
     public void destroy(){
         active=false;
         sprite.setPosition(-sprite.getWidth(),-sprite.getHeight());
     }
 
-    boolean getActive(){
+    @Override
+    public boolean getActive() {
         return active;
+    }
+
+    @Override
+    public Rectangle getRectandle(){
+        return sprite.getBoundingRectangle();
+    }
+
+    int getNum(){
+        return num;
     }
 
 
 
     void draw(SpriteBatch batch, float delta){
         if(active) {
+            move();
             reloadTime += delta;
             sprite.draw(batch);
             bullet.draw(batch, delta);
@@ -69,6 +80,13 @@ public class Enemy extends Subject{
         }
     }
 
+    private void move(){
+        for(Enemy value : Menu.frame.enemy) {
+
+        }
+        sprite.setX(X);
+    }
+
 
     public int getX() {
         return X;
@@ -79,43 +97,15 @@ public class Enemy extends Subject{
     }
 
     void setX(int xa) {
-        if(Math.abs(X-xa)<=sprite.getWidth()/2+30){
-            shot();
-        }
-        if(Math.abs(X-xa)<=speed){
-            X=xa;
-        }else{
-            X+=X-xa>=0?-speed:speed;
-        }
-        temp=false;
-        for(int i=0;i<Menu.frame.enemy.length;i++){
-            if (i == num) {
-                if(Menu.frame.enemy[i].getX()>=sprite.getX()&&Menu.frame.enemy[i].getX()<=sprite.getX()+sprite.getWidth()){
-                    temp=true;
-                    System.out.println("bom");
-                    tempi=i;
-                    break;
-                }
+        if(active) {
+            if (Math.abs(X - xa) <= sprite.getWidth() / 2 + 30) {
+                shot();
             }
-        }
-        if(!temp) {
-            tempi= (int) sprite.getX();
-            sprite.setX(X);
-        }else{
-            Menu.frame.enemy[tempi].setXP((int) (sprite.getX()+sprite.getWidth()+1));
-        }
-
-        temp=false;
-        for(int i=0;i<Menu.frame.enemy.length;i++){
-            if(i==num){
-                continue;
+            if (Math.abs(X - xa) <= speed) {
+                X = xa;
+            } else {
+                X += X - xa > 0 ? -speed : speed;
             }
-            if(Menu.frame.enemy[i].getX()>=sprite.getX()&&Menu.frame.enemy[i].getX()<=sprite.getX()+sprite.getWidth()){
-                temp=true;
-            }
-        }
-        if(temp) {
-            sprite.setX(tempi);
         }
     }
 

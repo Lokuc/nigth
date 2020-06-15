@@ -1,19 +1,15 @@
 package com.severgames.nigth;
 
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Rectangle;
 
-abstract class Subject {
-
-     protected Sprite sprite;
+interface Subject {
 
 
-    public Rectangle getRectandle(){
-        return sprite.getBoundingRectangle();
-    }
+    boolean getActive();
 
-    public void destroy(){
-        sprite.setPosition(-sprite.getWidth(),-sprite.getHeight());
-    }
+
+    Rectangle getRectandle();
+
+    void destroy();
 
 }

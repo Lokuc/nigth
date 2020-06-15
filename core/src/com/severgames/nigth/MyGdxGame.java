@@ -14,7 +14,6 @@ public class MyGdxGame extends Game {
 	public void create () {
 		H= Gdx.graphics.getHeight();
 		W= Gdx.graphics.getWidth();
-		System.out.println(H+" "+W);
 		Menu menu = new Menu(this);
 		setScreen(menu);
 	}
